@@ -4,6 +4,7 @@ import java.util.*;
  * Напишите метод, который получает на вход Map<K, V> и возвращает Map, где ключи и значения поменяны местами.
  * Так как значения исходной Map могут совпадать, то тип ключа в Map будет уже не K, а Collection<K>: Map<V, Collection<K>>
  */
+
 public class Swapping {
     public static void main(String[] args) {
 
@@ -22,7 +23,6 @@ public class Swapping {
 
         for(Map.Entry <String, Collection<Integer>> iter: swapping(map).entrySet()){
             System.out.println(iter);
-
         }
     }
 
