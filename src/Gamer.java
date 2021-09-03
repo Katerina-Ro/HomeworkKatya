@@ -32,7 +32,6 @@ public class Gamer {
     public static void calculateTheWinner (String[] arr) {
         int maxPoints = 0;
         String nameWinner = null;
-
         List<Gamer> listGamer = new ArrayList<>();
 
         for (int i = 0; i < arr.length; i++) {
