@@ -29,17 +29,16 @@ public class Swapping {
     public static <V, K> Map<V, Collection<K>> swapping(Map<K, V> map) {
         Map<V, Collection<K>> newMap = new HashMap<>();
 
-        Set<V> setValue = new HashSet<>();
-
         for (Map.Entry<K, V> entry : map.entrySet()) {
-            K key = entry.getKey();
             Collection<K> newValues = new ArrayList<>(); // получаем новое значение newMap - коллекция типа K
 
-            V newKey = entry.getValue(); // получаем новый ключ: если такого ключа нет в наборе, то происходит добавление в новую map с новым значением и новым ключом
-            if (!setValue.contains(newKey)) {
-                setValue.add(newKey);
-                newValues.add(key);
-                newMap.put(newKey, newValues);
+            if (newMap.containsKey(entry.getValue())) {  // entry.getValue() - получаем новый ключ: если такого ключа нет в наборе, то происходит добавление в новую map с новым значением и новым ключом
+                newValues = newMap.get(entry.getValue());
+                newValues.add(entry.getKey());
+            }
+            else {
+                newValues.add(entry.getKey());
+                newMap.put(entry.getValue(), newValues);
             }
         }
         return newMap;
