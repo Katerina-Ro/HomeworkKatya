@@ -35,30 +35,28 @@ public class FuelAccounting {
             switch (codeCars) {
                 case C100:
                     if (!cars.isEmpty()) {
-                        int i = 0;
-                        while (true) {
-                            if (number_transport.equals(cars.get(i).getNumber_auto())) {
-                                probegCar = cars.get(i).getProbeg() + probegCar;
-                                cars.get(i).setProbeg(probegCar);
+                        for (Car c: cars) {
+                            if (number_transport.equals(c.getNumber_auto())) {
+                                probegCar = c.getProbeg() + probegCar;
+                               c.setProbeg(probegCar);
                             } else {
                                 cars.add(new Car(codeCars, number_transport, probegCar));
                             }
                             break;
                         }
-                    } else {
+                    }else {
                         cars.add(new Car(codeCars, number_transport, probegCar));
                     }
                     break;
                 case C200:
                     if (!trucks.isEmpty()) {
-                        int i = 0;
-                        while (true) {
-                            if (number_transport.equals(trucks.get(i).getNumber_auto())) {
-                                probegCar = trucks.get(i).getProbeg() + probegCar;
-                                trucks.get(i).setProbeg(probegCar);
+                        for (Truck t: trucks) {
+                            if (number_transport.equals(t.getNumber_auto())) {
+                                probegCar = t.getProbeg() + probegCar;
+                                t.setProbeg(probegCar);
 
-                                param2 = trucks.get(i).getVolume_of_transported_cargo() + param2;
-                                trucks.get(i).setVolume_of_transported_cargo(param2);
+                                param2 = t.getVolume_of_transported_cargo() + param2;
+                               t.setVolume_of_transported_cargo(param2);
                             } else {
                                 trucks.add(new Truck(codeCars, number_transport, probegCar, param2));
                             }
@@ -70,14 +68,13 @@ public class FuelAccounting {
                     break;
                 case C300:
                     if (!passangerTransports.isEmpty()) {
-                        int i = 0;
-                        while (true) {
-                            if (passangerTransports.get(i).getNumber_auto().equals(number_transport)) {
-                                probegCar = passangerTransports.get(i).getProbeg() + probegCar;
-                                passangerTransports.get(i).setProbeg(probegCar);
+                        for (PassangerTransport pt: passangerTransports) {
+                            if (pt.getNumber_auto().equals(number_transport)) {
+                                probegCar = pt.getProbeg() + probegCar;
+                                pt.setProbeg(probegCar);
 
-                                param2 = passangerTransports.get(i).getNumber_of_passengers_carried() + param2;
-                                passangerTransports.get(i).setNumber_of_passengers_carried(param2);
+                                param2 = pt.getNumber_of_passengers_carried() + param2;
+                               pt.setNumber_of_passengers_carried(param2);
                             } else {
                                 passangerTransports.add(new PassangerTransport(codeCars, number_transport, probegCar, param2));
                             }
@@ -89,14 +86,13 @@ public class FuelAccounting {
                     break;
                 case C400:
                     if (!cranes.isEmpty()) {
-                        int i = 0;
-                        while (true) {
-                            if (cranes.get(i).getNumber_auto().equals(number_transport)) {
-                                probegCar = cranes.get(i).getProbeg() + probegCar;
-                                cranes.get(i).setProbeg(probegCar);
+                        for (Cranes cr: cranes){
+                            if (cr.getNumber_auto().equals(number_transport)) {
+                                probegCar = cr.getProbeg() + probegCar;
+                                cr.setProbeg(probegCar);
 
-                                param2 = cranes.get(i).getWeight_of_lifted_loads() + param2;
-                                cranes.get(i).setWeight_of_lifted_loads(param2);
+                                param2 = cr.getWeight_of_lifted_loads() + param2;
+                                cr.setWeight_of_lifted_loads(param2);
                             } else {
                                 cranes.add(new Cranes(codeCars, number_transport, probegCar, param2));
                             }
@@ -108,7 +104,6 @@ public class FuelAccounting {
                     break;
             }
         }
-
         // Получаем стоимость расходо на ГСМ
         FuelCosts fuelCosts = new FuelCosts();
 
@@ -141,17 +136,21 @@ public class FuelAccounting {
         System.out.println("Стоимость расходов на ГСМ на тяжелую технику " + totalCranes);
         System.out.println();
 
-        //общая стоимость расходов ГСМ по всем видам транспорта
-        System.out.println("Общая стоимость расходов ГСМ по всем видам транспорта = " + (totalCar + totalCranes + totalTruck + totalPassangerTransport));
-        System.out.println();
-
-        //Получаем тип транспорта наибольшего и наименьшего значений
+        //общая стоимость расходов ГСМ по всем видам транспорта totalTransport
         List<Double> listValueCosts = new ArrayList<>();
         listValueCosts.add(totalCar);
         listValueCosts.add(totalTruck);
         listValueCosts.add(totalPassangerTransport);
         listValueCosts.add(totalCranes);
 
+        Double totalTransport = 0.0;
+        for (Double number: listValueCosts){
+             totalTransport += number;
+        }
+        System.out.println("Общая стоимость расходов ГСМ по всем видам транспорта = " + totalTransport);
+        System.out.println();
+
+        //Получаем тип транспорта наибольшего и наименьшего значений
         Double maxValueCosts = Collections.max(listValueCosts);
         String type_transport_max;
         if (maxValueCosts == totalCar) {
